@@ -24,13 +24,18 @@ class DashboardController extends Controller
             ->orderBy('current_grade')
             ->get();
 
+        $genderDistribution = Student::selectRaw('gender, COUNT(*) as count')
+            ->groupBy('gender')
+            ->pluck('count', 'gender')
+            ->toArray();
+
         $recentStudents = Student::with('stream')->latest()->take(5)->get();
         $recentDistributions = StudentProductDistribution::with(['student', 'product'])->latest()->take(5)->get();
 
         return view('dashboard.index', compact(
             'totalStudents', 'totalSchools', 'activeYear',
             'totalDistributions', 'totalExpense',
-            'gradeDistribution', 'recentStudents', 'recentDistributions'
+            'gradeDistribution', 'genderDistribution', 'recentStudents', 'recentDistributions'
         ));
     }
 }

@@ -34,18 +34,27 @@ class StudentController extends Controller
     {
         $streams = Stream::all();
         $schools = School::orderBy('name')->get();
-        return view('students.create', compact('streams', 'schools'));
+        $donors = \App\Models\Donor::orderBy('name')->get();
+        $caregivers = \App\Models\Caregiver::orderBy('name')->get();
+        $gnDivisions = Student::getGnDivisions();
+        $gsDivisions = Student::getGsDivisions();
+        return view('students.create', compact('streams', 'schools', 'donors', 'caregivers', 'gnDivisions', 'gsDivisions'));
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
+            'admission_number' => 'nullable|string|max:50|unique:students,admission_number',
             'dob' => 'nullable|date',
             'gender' => 'nullable|in:Male,Female,Other',
             'address' => 'nullable|string',
             'parent_name' => 'nullable|string|max:255',
             'contact' => 'nullable|string|max:20',
+            'medical_emergency_name' => 'nullable|string|max:255',
+            'medical_emergency_contact' => 'nullable|string|max:255',
+            'gn_division' => 'nullable|string|max:255',
+            'gs_division' => 'nullable|string|max:255',
             'admission_year' => 'required|integer|min:2010|max:2100',
             'ol_index' => 'nullable|string|max:50',
             'al_index' => 'nullable|string|max:50',
@@ -53,6 +62,8 @@ class StudentController extends Controller
             'stream_id' => 'nullable|exists:streams,id',
             'school_id' => 'nullable|exists:schools,id',
             'from_year' => 'nullable|integer|min:2010|max:2100',
+            'donor_id' => 'nullable|exists:donors,id',
+            'caregiver_id' => 'nullable|exists:caregivers,id',
         ]);
 
         $student = Student::create($data);
@@ -71,7 +82,7 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
-        $student->load(['stream', 'schoolHistories.school', 'marks.subject', 'marks.academicYear', 'distributions.product', 'distributions.academicYear', 'publicExamEntries.publicExam', 'publicExamEntries.results.subject']);
+        $student->load(['stream', 'currentSchool.school', 'donor', 'caregiver', 'marks.academicYear', 'marks.subject', 'publicExamEntries.publicExam', 'publicExamEntries.results.subject', 'distributions.academicYear', 'distributions.product']);
         return view('students.show', compact('student'));
     }
 
@@ -79,23 +90,34 @@ class StudentController extends Controller
     {
         $streams = Stream::all();
         $schools = School::orderBy('name')->get();
-        return view('students.edit', compact('student', 'streams', 'schools'));
+        $donors = \App\Models\Donor::orderBy('name')->get();
+        $caregivers = \App\Models\Caregiver::orderBy('name')->get();
+        $gnDivisions = Student::getGnDivisions();
+        $gsDivisions = Student::getGsDivisions();
+        return view('students.edit', compact('student', 'streams', 'schools', 'donors', 'caregivers', 'gnDivisions', 'gsDivisions'));
     }
 
     public function update(Request $request, Student $student)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
+            'admission_number' => 'nullable|string|max:50|unique:students,admission_number,' . $student->id,
             'dob' => 'nullable|date',
             'gender' => 'nullable|in:Male,Female,Other',
             'address' => 'nullable|string',
             'parent_name' => 'nullable|string|max:255',
             'contact' => 'nullable|string|max:20',
+            'medical_emergency_name' => 'nullable|string|max:255',
+            'medical_emergency_contact' => 'nullable|string|max:255',
+            'gn_division' => 'nullable|string|max:255',
+            'gs_division' => 'nullable|string|max:255',
             'admission_year' => 'required|integer|min:2010|max:2100',
             'ol_index' => 'nullable|string|max:50',
             'al_index' => 'nullable|string|max:50',
             'current_grade' => 'required|integer|min:1|max:13',
             'stream_id' => 'nullable|exists:streams,id',
+            'donor_id' => 'nullable|exists:donors,id',
+            'caregiver_id' => 'nullable|exists:caregivers,id',
         ]);
 
         $student->update($data);

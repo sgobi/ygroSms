@@ -10,6 +10,9 @@
                 <div>
                     <div class="stat-value">{{ $totalStudents }}</div>
                     <div class="stat-label">Total Students</div>
+                    <div class="small text-white-50 mt-1">
+                        {{ $genderDistribution['Female'] ?? 0 }} Female · {{ $genderDistribution['Male'] ?? 0 }} Male
+                    </div>
                 </div>
                 <i class="bi bi-people stat-icon"></i>
             </div>

@@ -6,15 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\GnDivision;
+use App\Models\GsDivision;
+use App\Models\Caregiver;
 
 class Student extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'name', 'dob', 'gender', 'address', 'parent_name',
-        'contact', 'admission_year', 'ol_index', 'al_index',
-        'current_grade', 'stream_id', 'photo',
+        'name', 'admission_number', 'dob', 'gender', 'address', 'parent_name',
+        'contact', 'medical_emergency_name', 'medical_emergency_contact',
+        'gn_division', 'gs_division', 'admission_year', 'ol_index', 'al_index',
+        'current_grade', 'stream_id', 'photo', 'donor_id', 'caregiver_id',
     ];
 
     protected $casts = [
@@ -22,6 +26,16 @@ class Student extends Model
         'admission_year' => 'integer',
         'current_grade' => 'integer',
     ];
+
+    public static function getGnDivisions()
+    {
+        return GnDivision::orderBy('name')->pluck('name');
+    }
+
+    public static function getGsDivisions()
+    {
+        return GsDivision::orderBy('name')->pluck('name');
+    }
 
     // Relationships
     public function stream(): BelongsTo
@@ -58,6 +72,16 @@ class Student extends Model
     public function publicExamEntries(): HasMany
     {
         return $this->hasMany(StudentPublicExam::class)->with('publicExam');
+    }
+
+    public function donor(): BelongsTo
+    {
+        return $this->belongsTo(Donor::class);
+    }
+
+    public function caregiver(): BelongsTo
+    {
+        return $this->belongsTo(Caregiver::class);
     }
 
     // Helpers

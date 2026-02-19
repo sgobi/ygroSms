@@ -30,11 +30,52 @@
                     <dt class="col-5 text-muted">Address</dt><dd class="col-7">{{ $student->address ?? '–' }}</dd>
                     <dt class="col-5 text-muted">Parent</dt><dd class="col-7">{{ $student->parent_name ?? '–' }}</dd>
                     <dt class="col-5 text-muted">Contact</dt><dd class="col-7">{{ $student->contact ?? '–' }}</dd>
+                    <dt class="col-5 text-muted">Medical Contact Name</dt><dd class="col-7">{{ $student->medical_emergency_name ?? '–' }}</dd>
+                    <dt class="col-5 text-muted">Medical Contact No</dt><dd class="col-7">{{ $student->medical_emergency_contact ?? '–' }}</dd>
+                    <dt class="col-5 text-muted">GN Div</dt><dd class="col-7">{{ $student->gn_division ?? '–' }}</dd>
+                    <dt class="col-5 text-muted">GS Div</dt><dd class="col-7">{{ $student->gs_division ?? '–' }}</dd>
+                    <dt class="col-5 text-muted">Admission No</dt><dd class="col-7 font-monospace">{{ $student->admission_number ?? '–' }}</dd>
                     <dt class="col-5 text-muted">Admitted</dt><dd class="col-7">{{ $student->admission_year }}</dd>
                     <dt class="col-5 text-muted">O/L Index</dt><dd class="col-7">{{ $student->ol_index ?? '–' }}</dd>
                     <dt class="col-5 text-muted">A/L Index</dt><dd class="col-7">{{ $student->al_index ?? '–' }}</dd>
                     <dt class="col-5 text-muted">Stream</dt><dd class="col-7">{{ $student->stream?->name ?? '–' }}</dd>
                 </dl>
+                
+                <div class="mt-3 pt-3 border-top">
+                    <h6 class="small fw-bold text-uppercase text-muted mb-2">Main Caregiver</h6>
+                    @if($student->caregiver)
+                        <div class="small">
+                            <div class="fw-semibold text-dark">{{ $student->caregiver->title }} {{ $student->caregiver->name }}</div>
+                            @if($student->caregiver->mobile)
+                                <div class="text-muted"><i class="bi bi-telephone me-1"></i>{{ $student->caregiver->mobile }}</div>
+                            @endif
+                            @if($student->caregiver->occupation)
+                                <div class="text-muted"><i class="bi bi-briefcase me-1"></i>{{ $student->caregiver->occupation }}</div>
+                            @endif
+                            @if($student->caregiver->address)
+                                <div class="text-muted mt-1"><i class="bi bi-geo-alt me-1"></i>{{ $student->caregiver->address }}</div>
+                            @endif
+                        </div>
+                    @else
+                        <div class="text-muted small fst-italic">No caregiver details.</div>
+                    @endif
+                </div>
+
+                <div class="mt-3 pt-3 border-top">
+                    <h6 class="small fw-bold text-uppercase text-muted mb-2">Sponsorship</h6>
+                    @if($student->donor)
+                        <div class="d-flex align-items-center bg-light p-2 rounded border">
+                            <i class="bi bi-heart-fill text-danger fs-5 me-2"></i>
+                            <div>
+                                <div class="fw-semibold text-dark">{{ $student->donor->title }} {{ $student->donor->name }}</div>
+                                <div class="small text-muted">{{ $student->donor->phone }}</div>
+                            </div>
+                            <a href="{{ route('donors.edit', $student->donor) }}" class="btn btn-sm btn-link text-decoration-none ms-auto"><i class="bi bi-pencil-square"></i></a>
+                        </div>
+                    @else
+                        <div class="text-muted small fst-italic">No donor assigned. <a href="{{ route('students.edit', $student) }}">Assign now</a></div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>

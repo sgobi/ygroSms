@@ -83,6 +83,7 @@
                 <i class="bi bi-people"></i> Students
             </a>
         </li>
+
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('schools.*') ? 'active' : '' }}" href="{{ route('schools.index') }}">
                 <i class="bi bi-building"></i> Schools
@@ -113,6 +114,16 @@
 
         <div class="nav-section">Welfare</div>
         <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('donors.*') ? 'active' : '' }}" href="{{ route('donors.index') }}">
+                <i class="bi bi-heart"></i> Donors
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('caregivers.*') ? 'active' : '' }}" href="{{ route('caregivers.index') }}">
+                <i class="bi bi-person-heart"></i> Caregivers
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}" href="{{ route('products.index') }}">
                 <i class="bi bi-box-seam"></i> Products
             </a>
@@ -127,6 +138,13 @@
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('reports.*') ? 'active' : '' }}" href="{{ route('reports.index') }}">
                 <i class="bi bi-file-earmark-bar-graph"></i> Reports & PDFs
+            </a>
+        </li>
+
+        <div class="nav-section">Settings</div>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('divisions.*') ? 'active' : '' }}" href="{{ route('divisions.index') }}">
+                <i class="bi bi-geo-alt"></i> Regional Divisions
             </a>
         </li>
     </ul>

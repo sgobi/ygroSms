@@ -116,5 +116,15 @@ class DatabaseSeeder extends Seeder
         foreach (['General English','General Knowledge'] as $s) {
             $makeSubject($s, 12, 13);
         }
+
+        // Run other seeders
+        $this->call([
+            DivisionSeeder::class,
+            SampleDataSeeder::class,
+            CaregiverSeeder::class,
+            DonorSeeder::class,
+            PublicExamSeeder::class,
+            ExtendedDataSeeder::class,
+        ]);
     }
 }

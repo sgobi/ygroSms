@@ -11,6 +11,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\PublicExamController;
+use App\Http\Controllers\DivisionController;
+use App\Http\Controllers\DonorController;
+use App\Http\Controllers\CaregiverController;
 
 // Redirect root to dashboard or login
 Route::get('/', function () {
@@ -73,4 +76,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('public-exams/results/{entry}/download', [PublicExamController::class, 'downloadResultSheet'])->name('public-exams.results.download');
     Route::delete('public-exams/results/{entry}', [PublicExamController::class, 'destroyResult'])->name('public-exams.results.destroy');
     Route::get('public-exams/{publicExam}/report', [PublicExamController::class, 'report'])->name('public-exams.report');
+
+    // Divisions
+    Route::get('/divisions', [DivisionController::class, 'index'])->name('divisions.index');
+    Route::post('/divisions/gn', [DivisionController::class, 'storeGn'])->name('divisions.storeGn');
+    Route::post('/divisions/gs', [DivisionController::class, 'storeGs'])->name('divisions.storeGs');
+    Route::delete('/divisions/gn/{gnDivision}', [DivisionController::class, 'destroyGn'])->name('divisions.destroyGn');
+    Route::delete('/divisions/gs/{gsDivision}', [DivisionController::class, 'destroyGs'])->name('divisions.destroyGs');
+
+    // Donors
+    Route::resource('donors', DonorController::class);
+
+    // Caregivers
+    Route::resource('caregivers', CaregiverController::class);
 });

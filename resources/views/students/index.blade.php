@@ -45,7 +45,7 @@
         <table class="table table-hover mb-0">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th>Adm No</th>
                     <th>Name</th>
                     <th>Grade</th>
                     <th>Stream</th>
@@ -57,10 +57,12 @@
             <tbody>
             @forelse($students as $student)
                 <tr>
-                    <td class="text-muted small">{{ $student->id }}</td>
+                    <td class="text-muted small">
+                        <div>{{ $student->admission_number ?? '-' }}</div>
+                    </td>
                     <td>
                         <a href="{{ route('students.show', $student) }}" class="fw-semibold text-decoration-none">{{ $student->name }}</a>
-                        <div class="text-muted small">Adm: {{ $student->admission_year }}</div>
+                        <div class="text-muted small">Adm Year: {{ $student->admission_year }}</div>
                     </td>
                     <td><span class="badge-grade">Gr. {{ $student->current_grade }}</span></td>
                     <td>{{ $student->stream?->name ?? '–' }}</td>
