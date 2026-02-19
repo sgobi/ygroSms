@@ -71,7 +71,7 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
-        $student->load(['stream', 'schoolHistories.school', 'marks.subject', 'marks.academicYear', 'distributions.product', 'distributions.academicYear']);
+        $student->load(['stream', 'schoolHistories.school', 'marks.subject', 'marks.academicYear', 'distributions.product', 'distributions.academicYear', 'publicExamEntries.publicExam', 'publicExamEntries.results.subject']);
         return view('students.show', compact('student'));
     }
 

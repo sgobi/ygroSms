@@ -10,6 +10,7 @@ use App\Http\Controllers\MarkController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DistributionController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PublicExamController;
 
 // Redirect root to dashboard or login
 Route::get('/', function () {
@@ -64,4 +65,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/reports/distribution', [ReportController::class, 'distribution'])->name('reports.distribution');
     Route::get('/reports/expense', [ReportController::class, 'expense'])->name('reports.expense');
     Route::get('/reports/product-summary', [ReportController::class, 'productSummary'])->name('reports.productSummary');
+
+    // Public Exams
+    Route::resource('public-exams', PublicExamController::class);
+    Route::get('public-exams/{publicExam}/results/create', [PublicExamController::class, 'createResult'])->name('public-exams.results.create');
+    Route::post('public-exams/{publicExam}/results', [PublicExamController::class, 'storeResult'])->name('public-exams.results.store');
+    Route::get('public-exams/results/{entry}/download', [PublicExamController::class, 'downloadResultSheet'])->name('public-exams.results.download');
+    Route::delete('public-exams/results/{entry}', [PublicExamController::class, 'destroyResult'])->name('public-exams.results.destroy');
+    Route::get('public-exams/{publicExam}/report', [PublicExamController::class, 'report'])->name('public-exams.report');
 });

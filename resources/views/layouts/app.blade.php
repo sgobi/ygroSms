@@ -105,6 +105,11 @@
                 <i class="bi bi-calendar3"></i> Academic Years
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('public-exams.*') ? 'active' : '' }}" href="{{ route('public-exams.index') }}">
+                <i class="bi bi-mortarboard"></i> Public Exams
+            </a>
+        </li>
 
         <div class="nav-section">Welfare</div>
         <li class="nav-item">

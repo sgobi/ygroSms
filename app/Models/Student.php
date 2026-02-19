@@ -49,9 +49,15 @@ class Student extends Model
         return $this->hasMany(StudentSubject::class);
     }
 
+
     public function distributions(): HasMany
     {
         return $this->hasMany(StudentProductDistribution::class);
+    }
+
+    public function publicExamEntries(): HasMany
+    {
+        return $this->hasMany(StudentPublicExam::class)->with('publicExam');
     }
 
     // Helpers

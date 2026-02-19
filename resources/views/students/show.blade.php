@@ -66,6 +66,41 @@
             </div>
         </div>
 
+
+        {{-- Public Exams --}}
+        @if($student->publicExamEntries->isNotEmpty())
+        <div class="card mb-3">
+            <div class="card-header fw-semibold py-2">
+                <i class="bi bi-mortarboard me-2 text-info"></i>Public Exam Results
+            </div>
+            <div class="card-body p-0">
+                <table class="table mb-0 small">
+                    <thead><tr><th>Exam</th><th>Index</th><th>Results</th><th>File</th></tr></thead>
+                    <tbody>
+                    @foreach($student->publicExamEntries as $pe)
+                        <tr>
+                            <td>{{ $pe->publicExam->name }}</td>
+                            <td class="font-monospace text-muted">{{ $pe->index_number }}</td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-1">
+                                @foreach($pe->results as $r)
+                                    <span class="badge border bg-light text-dark">{{ $r->subject->name }}: {{ $r->grade }}</span>
+                                @endforeach
+                                </div>
+                            </td>
+                            <td>
+                                @if($pe->result_file_path)
+                                <a href="{{ route('public-exams.results.download', $pe) }}" class="text-danger" title="Result Sheet"><i class="bi bi-file-pdf"></i></a>
+                                @else – @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        @endif
+
         {{-- Recent Marks --}}
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center py-2">

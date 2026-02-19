@@ -3,46 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PublicExamResult extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
-        'student_id',
-        'academic_year_id',
-        'exam_type',
-        'exam_year',
-        'index_number',
-        'result_sheet_path',
-        'notes',
+        'student_public_exam_id',
+        'subject_id',
+        'grade',
     ];
 
-    public function student(): BelongsTo
+    public function studentPublicExam()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsTo(StudentPublicExam::class);
     }
 
-    public function academicYear(): BelongsTo
+    public function subject()
     {
-        return $this->belongsTo(AcademicYear::class);
-    }
-
-    public function subjects(): HasMany
-    {
-        return $this->hasMany(PublicExamResultSubject::class);
-    }
-
-    // Grade colour helper
-    public static function gradeColor(string $grade): string
-    {
-        return match ($grade) {
-            'A'  => 'success',
-            'B'  => 'primary',
-            'C'  => 'info',
-            'S'  => 'warning',
-            'W'  => 'danger',
-            default => 'secondary',
-        };
+        return $this->belongsTo(Subject::class);
     }
 }
