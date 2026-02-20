@@ -20,7 +20,10 @@ class DashboardController extends Controller
         $totalDistributions = StudentProductDistribution::count();
         $totalExpense = StudentProductDistribution::selectRaw('SUM(quantity * unit_price) as total')->value('total') ?? 0;
 
-        $disciplineSummary = DisciplinaryRecord::selectRaw('status, COUNT(*) as count')
+        $disciplineSummary = DisciplinaryRecord::when($activeYear, function ($q) use ($activeYear) {
+                return $q->where('academic_year_id', $activeYear->id);
+            })
+            ->selectRaw('status, COUNT(*) as count')
             ->groupBy('status')
             ->pluck('count', 'status')
             ->toArray();

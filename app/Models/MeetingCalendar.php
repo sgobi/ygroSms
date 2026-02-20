@@ -8,15 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class MeetingCalendar extends Model
 {
     protected $fillable = [
-        'year',
-        'month',
         'meeting_title',
         'meeting_date',
     ];
 
     protected $casts = [
-        'year' => 'integer',
-        'month' => 'integer',
         'meeting_date' => 'date',
     ];
 
@@ -26,10 +22,26 @@ class MeetingCalendar extends Model
     }
 
     /**
+     * Get the month number from the meeting date.
+     */
+    public function getMonthAttribute(): int
+    {
+        return (int) $this->meeting_date->format('n');
+    }
+
+    /**
+     * Get the year from the meeting date.
+     */
+    public function getYearAttribute(): int
+    {
+        return (int) $this->meeting_date->format('Y');
+    }
+
+    /**
      * Helper to get month name.
      */
     public function getMonthNameAttribute(): string
     {
-        return date('F', mktime(0, 0, 0, $this->month, 10));
+        return $this->meeting_date->format('F');
     }
 }

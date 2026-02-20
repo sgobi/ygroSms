@@ -41,16 +41,27 @@
         </div>
     </div>
     <div class="col-sm-6 col-xl-3">
-        <div class="stat-card" style="background: linear-gradient(135deg,#991b1b,#dc2626);">
+        @php
+            $warnings = $disciplineSummary['Warning'] ?? 0;
+            $good = $disciplineSummary['Good'] ?? 0;
+            $hasWarnings = $warnings > 0;
+        @endphp
+        <div class="stat-card shadow-sm border-0" style="background: {{ $hasWarnings ? 'linear-gradient(135deg,#b91c1c,#ef4444)' : 'linear-gradient(135deg,#1e3a5f,#2563eb)' }}; transition: all 0.3s ease;">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
-                    <div class="stat-value">{{ $disciplineSummary['Warning'] ?? 0 }}</div>
-                    <div class="stat-label">Discipline Warnings</div>
-                    <div class="small text-white-50 mt-1">
-                        {{ $disciplineSummary['Good'] ?? 0 }} Good Records
+                    <div class="stat-value display-6 fw-bold text-white mb-0">{{ $good }}</div>
+                    <div class="stat-label text-white text-opacity-90 fw-semibold">Good Records</div>
+                    <div class="small mt-2 text-white text-opacity-75 border-top border-white border-opacity-10 pt-1">
+                        @if($hasWarnings)
+                            <span class="fw-medium">{{ $warnings }} Warning Records</span>
+                        @else
+                            <i class="bi bi-shield-check me-1"></i> Perfect Integrity
+                        @endif
                     </div>
                 </div>
-                <i class="bi bi-shield-exclamation stat-icon"></i>
+                <div class="stat-icon-wrapper rounded-circle p-2 bg-white bg-opacity-10">
+                    <i class="bi {{ $hasWarnings ? 'bi-shield-exclamation' : 'bi-shield-check' }} text-white opacity-75 fs-2"></i>
+                </div>
             </div>
         </div>
     </div>

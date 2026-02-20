@@ -9,7 +9,7 @@ class MeetingCalendarController extends Controller
 {
     public function index()
     {
-        $meetings = MeetingCalendar::orderByDesc('year')->orderByDesc('month')->paginate(12);
+        $meetings = MeetingCalendar::orderByDesc('meeting_date')->paginate(12);
         return view('meetings.index', compact('meetings'));
     }
 
@@ -21,15 +21,13 @@ class MeetingCalendarController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'year' => 'required|integer|min:2020|max:2099',
-            'month' => 'required|integer|min:1|max:12',
+            'meeting_date' => 'required|date|unique:meeting_calendars,meeting_date',
             'meeting_title' => 'nullable|string|max:255',
-            'meeting_date' => 'nullable|date',
         ]);
 
         MeetingCalendar::create($validated);
 
-        return redirect()->route('meetings.index')->with('success', 'Meeting month added to calendar.');
+        return redirect()->route('meetings.index')->with('success', 'Meeting date added to calendar.');
     }
 
     public function edit(MeetingCalendar $meeting)
@@ -40,10 +38,8 @@ class MeetingCalendarController extends Controller
     public function update(Request $request, MeetingCalendar $meeting)
     {
         $validated = $request->validate([
-            'year' => 'required|integer|min:2020|max:2099',
-            'month' => 'required|integer|min:1|max:12',
+            'meeting_date' => 'required|date|unique:meeting_calendars,meeting_date,' . $meeting->id,
             'meeting_title' => 'nullable|string|max:255',
-            'meeting_date' => 'nullable|date',
         ]);
 
         $meeting->update($validated);
@@ -54,6 +50,6 @@ class MeetingCalendarController extends Controller
     public function destroy(MeetingCalendar $meeting)
     {
         $meeting->delete();
-        return redirect()->route('meetings.index')->with('success', 'Meeting month removed.');
+        return redirect()->route('meetings.index')->with('success', 'Meeting removed.');
     }
 }

@@ -50,8 +50,9 @@ class DisciplinaryRecordController extends Controller
         $activeYearId = AcademicYear::where('is_active', true)->value('id');
         $selectedStudentId = $request->student_id;
         
-        // Pass meeting calendar info to UI
+        // Pass meeting calendar info to UI, derived from meeting_date
         $meetingCalendar = MeetingCalendar::all()->mapWithKeys(function ($item) {
+            // Using accessor methods getYearAttribute and getMonthAttribute
             return [$item->year . '-' . $item->month => true];
         });
 
@@ -65,9 +66,9 @@ class DisciplinaryRecordController extends Controller
     {
         $academicYear = AcademicYear::find($request->academic_year_id);
         
-        // Find matching meeting month
-        $meeting = MeetingCalendar::where('year', $academicYear->year)
-            ->where('month', $request->month)
+        // Find matching meeting by extracted month and year
+        $meeting = MeetingCalendar::whereYear('meeting_date', $academicYear->year)
+            ->whereMonth('meeting_date', $request->month)
             ->first();
 
         $record = DisciplinaryRecord::updateOrCreate(
@@ -78,7 +79,6 @@ class DisciplinaryRecordController extends Controller
             ],
             [
                 'meeting_calendar_id' => $meeting?->id,
-                // Validated as boolean in the request
                 'meeting_participated' => $request->meeting_participated,
                 'bill_submitted' => $request->bill_submitted,
             ]
@@ -118,8 +118,8 @@ class DisciplinaryRecordController extends Controller
     {
         $academicYear = AcademicYear::find($request->academic_year_id);
         
-        $meeting = MeetingCalendar::where('year', $academicYear->year)
-            ->where('month', $request->month)
+        $meeting = MeetingCalendar::whereYear('meeting_date', $academicYear->year)
+            ->whereMonth('meeting_date', $request->month)
             ->first();
 
         $discipline->update(array_merge($request->validated(), [

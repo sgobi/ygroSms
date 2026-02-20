@@ -24,17 +24,15 @@ class DisciplinaryRecordSeeder extends Seeder
         $activeYear = AcademicYear::where('is_active', true)->first();
         if (!$activeYear) return;
 
-        // Create some Meeting Calendar entries
+        // Create some Meeting Calendar entries with specific dates
+        // Jan: Meeting
         $m1 = MeetingCalendar::create([
-            'year' => $activeYear->year,
-            'month' => 1,
             'meeting_title' => 'Initial Parent Meet',
             'meeting_date' => $activeYear->year . '-01-15',
         ]);
         
+        // Mar: Meeting
         $m2 = MeetingCalendar::create([
-            'year' => $activeYear->year,
-            'month' => 3,
             'meeting_title' => 'Quarterly Review',
             'meeting_date' => $activeYear->year . '-03-20',
         ]);
@@ -52,7 +50,7 @@ class DisciplinaryRecordSeeder extends Seeder
                 'bill_submitted' => true,
             ]);
 
-            // Month 2 (Feb): No Meeting + Bill -> Good
+            // Month 2 (Feb): No Meeting + Bill -> Good (No mandatory meeting in calendar)
             DisciplinaryRecord::create([
                 'student_id' => $student->id,
                 'academic_year_id' => $activeYear->id,
@@ -72,7 +70,7 @@ class DisciplinaryRecordSeeder extends Seeder
                 'bill_submitted' => true,
             ]);
 
-            // Month 4 (Apr): No Meeting + No Bill -> Warning
+            // Month 4 (Apr): No Meeting + No Bill -> Warning (Missing bill)
             DisciplinaryRecord::create([
                 'student_id' => $student->id,
                 'academic_year_id' => $activeYear->id,
