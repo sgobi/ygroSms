@@ -41,11 +41,7 @@
                     <label class="form-label fw-semibold small">Full Name <span class="text-danger">*</span></label>
                     <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
                 </div>
-                <div class="col-md-3">
-                    <label class="form-label fw-semibold small">Admission Number</label>
-                    <input type="text" name="admission_number" class="form-control" value="{{ old('admission_number') }}">
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label class="form-label fw-semibold small">Date of Birth</label>
                     <input type="date" name="dob" class="form-control" value="{{ old('dob') }}">
                 </div>
@@ -106,6 +102,10 @@
 
                 {{-- Academic Info --}}
                 <div class="col-12 mt-4"><h6 class="text-muted fw-semibold border-bottom pb-2">Academic Information</h6></div>
+                <div class="col-md-3">
+                    <label class="form-label fw-semibold small">Admission Number</label>
+                    <input type="text" name="admission_number" class="form-control" value="{{ old('admission_number') }}">
+                </div>
                 <div class="col-md-3">
                     <label class="form-label fw-semibold small">Admission Year <span class="text-danger">*</span></label>
                     <input type="number" name="admission_year" class="form-control" value="{{ old('admission_year', date('Y')) }}" min="2010" max="2100" required>
