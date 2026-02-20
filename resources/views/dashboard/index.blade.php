@@ -19,17 +19,6 @@
         </div>
     </div>
     <div class="col-sm-6 col-xl-3">
-        <div class="stat-card" style="background: linear-gradient(135deg,#065f46,#059669);">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <div class="stat-value">{{ $totalSchools }}</div>
-                    <div class="stat-label">Schools</div>
-                </div>
-                <i class="bi bi-building stat-icon"></i>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-6 col-xl-3">
         <div class="stat-card" style="background: linear-gradient(135deg,#78350f,#d97706);">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -48,6 +37,20 @@
                     <div class="stat-label">Total Welfare Spend</div>
                 </div>
                 <i class="bi bi-currency-dollar stat-icon"></i>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="stat-card" style="background: linear-gradient(135deg,#991b1b,#dc2626);">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <div class="stat-value">{{ $disciplineSummary['Warning'] ?? 0 }}</div>
+                    <div class="stat-label">Discipline Warnings</div>
+                    <div class="small text-white-50 mt-1">
+                        {{ $disciplineSummary['Good'] ?? 0 }} Good Records
+                    </div>
+                </div>
+                <i class="bi bi-shield-exclamation stat-icon"></i>
             </div>
         </div>
     </div>

@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Models\GnDivision;
-use App\Models\GsDivision;
-use App\Models\Caregiver;
 
 class Student extends Model
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name', 'admission_number', 'dob', 'gender', 'address', 'parent_name',
@@ -72,6 +70,11 @@ class Student extends Model
     public function publicExamEntries(): HasMany
     {
         return $this->hasMany(StudentPublicExam::class)->with('publicExam');
+    }
+
+    public function disciplinaryRecords(): HasMany
+    {
+        return $this->hasMany(DisciplinaryRecord::class)->orderByDesc('academic_year_id')->orderByDesc('month');
     }
 
     public function donor(): BelongsTo

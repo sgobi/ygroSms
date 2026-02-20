@@ -107,6 +107,16 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('discipline.*') ? 'active' : '' }}" href="{{ route('discipline.index') }}">
+                <i class="bi bi-shield-exclamation"></i> Disciplinary History
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('meetings.*') ? 'active' : '' }}" href="{{ route('meetings.index') }}">
+                <i class="bi bi-calendar-check"></i> Meeting Calendar
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('public-exams.*') ? 'active' : '' }}" href="{{ route('public-exams.index') }}">
                 <i class="bi bi-mortarboard"></i> Public Exams
             </a>

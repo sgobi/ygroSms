@@ -167,6 +167,57 @@
                 </table>
             </div>
         </div>
+
+        {{-- Disciplinary History --}}
+        <div class="card mb-3">
+            <div class="card-header d-flex justify-content-between align-items-center py-2">
+                <span class="fw-semibold text-danger"><i class="bi bi-shield-check me-2"></i>Tracking History</span>
+                <a href="{{ route('discipline.create', ['student_id' => $student->id]) }}" class="btn btn-sm btn-outline-danger">Track Participation</a>
+            </div>
+            <div class="card-body p-0">
+                <table class="table mb-0 small">
+                    <thead><tr><th>Year</th><th>Month</th><th class="text-center">Meeting</th><th class="text-center">Bill</th><th>Status</th></tr></thead>
+                    <tbody>
+                    @forelse($student->disciplinaryRecords as $dr)
+                        <tr>
+                            <td>{{ $dr->academicYear->year }}</td>
+                            <td>{{ $dr->month_name }}</td>
+                            <td class="text-center">
+                                @if($dr->meeting_participated)
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                @else
+                                    <i class="bi bi-x-circle-fill text-danger"></i>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if($dr->bill_submitted)
+                                    <i class="bi bi-check-circle-fill text-success"></i>
+                                @else
+                                    <i class="bi bi-x-circle-fill text-danger"></i>
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $statusClass = match($dr->status) {
+                                        'Good' => 'bg-success',
+                                        'Pending Bill' => 'bg-info text-dark',
+                                        'No Meeting' => 'bg-primary',
+                                        'Warning' => 'bg-danger',
+                                        default => 'bg-secondary'
+                                    };
+                                @endphp
+                                <span class="badge {{ $statusClass }}">
+                                    {{ $dr->status }}
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="5" class="text-center text-muted py-2">No tracking records found.</td></tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 

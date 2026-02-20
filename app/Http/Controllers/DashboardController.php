@@ -7,6 +7,7 @@ use App\Models\Mark;
 use App\Models\StudentProductDistribution;
 use App\Models\School;
 use App\Models\AcademicYear;
+use App\Models\DisciplinaryRecord;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -18,6 +19,11 @@ class DashboardController extends Controller
         $activeYear = AcademicYear::where('is_active', true)->first();
         $totalDistributions = StudentProductDistribution::count();
         $totalExpense = StudentProductDistribution::selectRaw('SUM(quantity * unit_price) as total')->value('total') ?? 0;
+
+        $disciplineSummary = DisciplinaryRecord::selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')
+            ->pluck('count', 'status')
+            ->toArray();
 
         $gradeDistribution = Student::selectRaw('current_grade, COUNT(*) as count')
             ->groupBy('current_grade')
@@ -35,6 +41,7 @@ class DashboardController extends Controller
         return view('dashboard.index', compact(
             'totalStudents', 'totalSchools', 'activeYear',
             'totalDistributions', 'totalExpense',
+            'disciplineSummary',
             'gradeDistribution', 'genderDistribution', 'recentStudents', 'recentDistributions'
         ));
     }

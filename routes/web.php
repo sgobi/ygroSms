@@ -14,6 +14,7 @@ use App\Http\Controllers\PublicExamController;
 use App\Http\Controllers\DivisionController;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\CaregiverController;
+use App\Http\Controllers\MeetingCalendarController;
 
 // Redirect root to dashboard or login
 Route::get('/', function () {
@@ -89,4 +90,10 @@ Route::middleware(['auth'])->group(function () {
 
     // Caregivers
     Route::resource('caregivers', CaregiverController::class);
+
+    // Meeting Calendar
+    Route::resource('meetings', MeetingCalendarController::class);
+
+    // Disciplinary History
+    Route::resource('discipline', \App\Http\Controllers\DisciplinaryRecordController::class);
 });
