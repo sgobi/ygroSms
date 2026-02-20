@@ -12,6 +12,7 @@
         <form method="POST" action="{{ route('students.update', $student) }}">
             @csrf @method('PUT')
             <div class="row g-3">
+                {{-- Sponsorship Info --}}
                 <div class="col-12"><h6 class="text-muted fw-semibold border-bottom pb-2">Sponsorship</h6></div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold small">Select Caregiver</label>
@@ -34,16 +35,17 @@
                     </select>
                 </div>
 
+                {{-- Personal Information --}}
                 <div class="col-12 mt-4"><h6 class="text-muted fw-semibold border-bottom pb-2">Personal Information</h6></div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold small">Full Name <span class="text-danger">*</span></label>
                     <input type="text" name="name" class="form-control" value="{{ old('name', $student->name) }}" required>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                     <label class="form-label fw-semibold small">Date of Birth</label>
                     <input type="date" name="dob" class="form-control" value="{{ old('dob', $student->dob?->format('Y-m-d')) }}">
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="form-label fw-semibold small">Gender</label>
                     <select name="gender" class="form-select">
                         <option value="">Select</option>
@@ -52,21 +54,24 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold small">Parent/Guardian Name</label>
-                    <input type="text" name="parent_name" class="form-control" value="{{ old('parent_name', $student->parent_name) }}">
-                </div>
-                <div class="col-md-4">
-                    <label class="form-label fw-semibold small">Contact</label>
-                    <input type="text" name="contact" class="form-control" value="{{ old('contact', $student->contact) }}">
-                </div>
                 <div class="col-md-12">
                     <label class="form-label fw-semibold small">Address</label>
                     <textarea name="address" class="form-control" rows="2">{{ old('address', $student->address) }}</textarea>
                 </div>
 
+                {{-- Parent/Guardian --}}
+                <div class="col-12 mt-4"><h6 class="text-muted fw-semibold border-bottom pb-2">Parent/Guardian</h6></div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold small">Parent/Guardian Name</label>
+                    <input type="text" name="parent_name" class="form-control" value="{{ old('parent_name', $student->parent_name) }}">
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold small">Contact Number</label>
+                    <input type="text" name="contact" class="form-control" value="{{ old('contact', $student->contact) }}">
+                </div>
 
-
+                {{-- Emergency --}}
+                <div class="col-12 mt-4"><h6 class="text-muted fw-semibold border-bottom pb-2">Emergency</h6></div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold small">Medical/Emergency Contact Name</label>
                     <input type="text" name="medical_emergency_name" class="form-control" value="{{ old('medical_emergency_name', $student->medical_emergency_name) }}">
@@ -76,6 +81,7 @@
                     <input type="text" name="medical_emergency_contact" class="form-control" value="{{ old('medical_emergency_contact', $student->medical_emergency_contact) }}">
                 </div>
 
+                {{-- Regional Information --}}
                 <div class="col-12 mt-4"><h6 class="text-muted fw-semibold border-bottom pb-2">Regional Information</h6></div>
                 <div class="col-md-6">
                     <label class="form-label fw-semibold small">GN Division</label>
@@ -96,6 +102,7 @@
                     </select>
                 </div>
 
+                {{-- Academic Information --}}
                 <div class="col-12 mt-4"><h6 class="text-muted fw-semibold border-bottom pb-2">Academic Information</h6></div>
                 <div class="col-md-3">
                     <label class="form-label fw-semibold small">Admission Number</label>
