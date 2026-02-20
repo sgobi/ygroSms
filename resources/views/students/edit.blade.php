@@ -43,7 +43,7 @@
                     <label class="form-label fw-semibold small">Date of Birth</label>
                     <input type="date" name="dob" class="form-control" value="{{ old('dob', $student->dob?->format('Y-m-d')) }}">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label fw-semibold small">Gender</label>
                     <select name="gender" class="form-select">
                         <option value="">Select</option>
@@ -52,17 +52,17 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label fw-semibold small">Address</label>
-                    <textarea name="address" class="form-control" rows="2">{{ old('address', $student->address) }}</textarea>
-                </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label fw-semibold small">Parent/Guardian Name</label>
                     <input type="text" name="parent_name" class="form-control" value="{{ old('parent_name', $student->parent_name) }}">
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="form-label fw-semibold small">Contact</label>
                     <input type="text" name="contact" class="form-control" value="{{ old('contact', $student->contact) }}">
+                </div>
+                <div class="col-md-12">
+                    <label class="form-label fw-semibold small">Address</label>
+                    <textarea name="address" class="form-control" rows="2">{{ old('address', $student->address) }}</textarea>
                 </div>
 
 
